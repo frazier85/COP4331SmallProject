@@ -18,8 +18,7 @@ if(!isset($user) or !isset($pass))
 $dbc = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if (mysqli_connect_errno())
 {
-	$error = '{"id":-1,"username":"","error":"There was an issue with our database (' . mysqli_connect_errno . ')"}';
-	sendResultInfoAsJson($error);
+	sendError('There was an issue with our database (' . mysqli_connect_errno . ')');
 	die();
 }
 
@@ -41,8 +40,7 @@ if(isset($login)
 	}
 	else
 	{
-		$error = '{"id":-1,"username":"","error":"There was an issue with our database."}';
-		sendResultInfoAsJson($error);
+		sendError("There was an issue with our database.");
 	}
 }
 elseif(isset($logout))
