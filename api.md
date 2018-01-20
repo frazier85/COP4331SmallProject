@@ -19,3 +19,6 @@
 
 **/api/contact.php?edit=1**
 * Edit a contact, expects json with contact's new information (including the contact's unique ID)
+
+**/api/contact.php?view=1**
+* Outputs all of the user's contacts
