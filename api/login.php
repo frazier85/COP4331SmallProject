@@ -12,7 +12,8 @@ $pass = $inData["password"];
 
 if(!isset($user) or !isset($pass))
 {
-	die("Username or password are mandatory");
+	sendError("Please provide both a username and a password");
+	die();
 }
 
 $dbc = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
