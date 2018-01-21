@@ -19,7 +19,7 @@ if(!isset($user) or !isset($pass))
 $dbc = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if (mysqli_connect_errno())
 {
-	sendError('There was an issue with our database (' . mysqli_connect_errno . ')');
+	sendError('There was an issue with our database. (' . mysqli_connect_errno . ')');
 	die();
 }
 
@@ -34,7 +34,7 @@ if(isset($login)
 		$json = '{"id":-1,"username":"","error":"Invalid username or password."}';
 		if($stmt->fetch())
 		{
-			$json = '{"id":' . $uid . ',"username":"' . $user .'",error":""}';
+			$json = '{"id":' . $uid . ',"username":"' . $user .'","error":""}';
 		}
 		$stmt->close();
 		sendResultInfoAsJson($json);
