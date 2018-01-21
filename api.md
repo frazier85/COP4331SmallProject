@@ -22,3 +22,8 @@
 
 **/api/contact.php?view=1**
 * Outputs all of the user's contacts
+
+##Test JSON's
+
+**db_error**: Can happen on any page, simulates the SQL server being down  
+**login_\***: Simulates a successful or unsuccesful login attempt
