@@ -1,6 +1,7 @@
 
-//	Ids and variable names based on what I saw from the html and php tags
-//  not entire sure how well this works.
+//  Ids and variable names based on what I saw from the html and php tags
+//  not entire sure how well everything is going to go together, feel free to change
+//  need to fix searh contacts so it works on every column (first, last, phone#, email)
 
 var urlBase = '';
 var extension = "php";
