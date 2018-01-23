@@ -80,6 +80,8 @@ elseif(isset($view))
 			$json = $json . '{"id" : ' . $cid . ', "first" : "' . $fname . '","last":"' . $lname .
 			'", "phone" : "' . $phone . '", "email" : "' . $email . '"},';
 		}
+		//remove last comma
+		$json = substr($json, 0, -1);
 		$json = $json . "]}";
 		$stmt->close();
 	}
