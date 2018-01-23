@@ -44,13 +44,18 @@ if(isset($login)
 		sendError("There was an issue with our database.");
 	}
 }
-elseif(isset($logout))
-{
-	
-}
 elseif(isset($register))
 {
-	
+	if($stmt = $dbc->prepare("INSERT INTO USERS (id, username, PW) VALUES (NULL, ?, ?)"))
+	{
+		$stmt->bind_param('ss', $user, $pass);
+		$stmt->execute();
+	}
+	else 
+	{
+		sendError("There was an issue with our database. (" . $mysqli->error . ")");
+	}
+	mysqli_close($dbc);
 }
 else
 {
