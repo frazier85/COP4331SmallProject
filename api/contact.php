@@ -17,7 +17,7 @@ if (mysqli_connect_errno())
 
 if(isset($add)
 {
-	$uid   = $inData["userID"];
+	$uid   = $inData["userid"];
 	$fname = $inData["fname"];
 	$lname = $inData["lname"];
 	$phone = $inData["phone"];
@@ -27,7 +27,7 @@ if(isset($add)
 		$stmt->bind_param('issss', $uid, $fname, $lname, $phone, $email);
 		$stmt->execute();
 	}
-	else 
+	else
 	{
 		sendError("There was an issue with our database. (" . $mysqli->error . ")");
 	}
@@ -35,13 +35,13 @@ if(isset($add)
 }
 elseif(isset($del))
 {
-	$cid = $inData["contactID"];
+	$cid = $inData["contactid"];
 	if($stmt = $dbc->prepare("DELETE FROM CONTACTS WHERE id=?"))
 	{
 		$stmt->bind_param('i', $cid);
 		$stmt->execute();
 	}
-	else 
+	else
 	{
 		sendError("There was an issue with our database. (" . $mysqli->error . ")");
 	}
@@ -49,7 +49,7 @@ elseif(isset($del))
 }
 elseif(isset($edit))
 {
-	$cid   = $inData["contactID"];
+	$cid   = $inData["contactid"];
 	$fname = $inData["fname"];
 	$lname = $inData["lname"];
 	$phone = $inData["phone"];
@@ -59,7 +59,7 @@ elseif(isset($edit))
 		$stmt->bind_param('ssssi', $fname, $lname, $phone, $email, $cid);
 		$stmt->execute();
 	}
-	else 
+	else
 	{
 		sendError("There was an issue with our database. (" . $mysqli->error . ")");
 	}
@@ -69,7 +69,7 @@ elseif(isset($view))
 {
 	if ($stmt = $dbc->prepare("SELECT * FROM CONTACTS WHERE userID=? ORDER BY lastname ASC" ))
 	{
-		$uid = $inData["userID"];
+		$uid = $inData["userid"];
 		$stmt->bind_param('i', $uid);
 		$stmt->execute();
 		$stmt->store_result();
@@ -83,7 +83,7 @@ elseif(isset($view))
 		$json = $json . "]}";
 		$stmt->close();
 	}
-	else 
+	else
 	{
 		sendError("There was an issue with our database. (" . $mysqli->error . ")");
 	}
