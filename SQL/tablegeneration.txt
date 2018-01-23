@@ -1,10 +1,12 @@
-﻿CREATE TABLE IF NOT EXISTS contactmanager.USERS (
+CREATE TABLE IF NOT EXISTS contactmanager.USERS (
 
   ID int NOT NULL AUTO_INCREMENT,
 
   username VARCHAR(45) NOT NULL,
 
-  PW VARCHAR(45) NOT NULL
+  PW VARCHAR(45) NOT NULL,
+  
+  PRIMARY KEY(ID)
 )
 
   Engine = InnoDB;
