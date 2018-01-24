@@ -84,6 +84,7 @@ elseif(isset($view))
 		$json = substr($json, 0, -1);
 		$json = $json . "]}";
 		$stmt->close();
+		sendResultInfoAsJson($json);
 	}
 	else
 	{
