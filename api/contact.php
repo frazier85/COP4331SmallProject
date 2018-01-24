@@ -17,7 +17,7 @@ if (mysqli_connect_errno())
 
 if(isset($add)
 {
-	$uid   = $inData["userid"];
+	$uid   = $inData["uid"];
 	$fname = $inData["fname"];
 	$lname = $inData["lname"];
 	$phone = $inData["phone"];

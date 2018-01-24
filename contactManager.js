@@ -3,7 +3,7 @@
 //  not entire sure how well everything is going to go together, feel free to change
 //  need to fix searh contacts so it works on every column (first, last, phone#, email)
 
-var urlBase = '';
+var urlBase = '/api';
 var extension = "php";
 
 var userId = 0;
