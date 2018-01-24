@@ -23,7 +23,7 @@ if (mysqli_connect_errno())
 	die();
 }
 
-if(isset($login)
+if(isset($login))
 {
 	if ($stmt = $dbc->prepare("SELECT ID,username FROM USERS WHERE username=? AND PW=?" ))
 	{
@@ -51,7 +51,7 @@ elseif(isset($register))
 		$stmt->bind_param('ss', $user, $pass);
 		$stmt->execute();
 	}
-	else 
+	else
 	{
 		sendError("There was an issue with our database. (" . $mysqli->error . ")");
 	}
@@ -62,6 +62,4 @@ else
 	mysqli_close($dbc);
 	die("Invalid GET parameters.");
 }
-
-mysqli_close($dbc);
 ?>
