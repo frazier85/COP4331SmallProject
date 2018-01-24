@@ -15,7 +15,7 @@ if (mysqli_connect_errno())
 	die();
 }
 
-if(isset($add)
+if(isset($add))
 {
 	$uid   = $inData["uid"];
 	$fname = $inData["fname"];
@@ -69,7 +69,7 @@ elseif(isset($view))
 {
 	if ($stmt = $dbc->prepare("SELECT * FROM CONTACTS WHERE userID=? ORDER BY lastname ASC" ))
 	{
-		$uid = $inData["userid"];
+		$uid = $inData["uid"];
 		$stmt->bind_param('i', $uid);
 		$stmt->execute();
 		$stmt->store_result();

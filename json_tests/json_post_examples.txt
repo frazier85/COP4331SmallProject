@@ -1,0 +1,19 @@
+These are examples of what the clientside JS should send as JSON to the PHP API:
+
+http://project.codethree.net/api/login.php?register=1
+{"username":"yes","password":"no"}
+
+http://project.codethree.net/api/login.php?login=1
+{"username":"yes","password":"no"}
+
+http://project.codethree.net/api/contact.php?view=1
+{"uid":1}
+
+http://project.codethree.net/api/contact.php?add=1
+{"uid":1,"fname":"Robert","lname":"Leinecker","phone":"1234567890","email":"example@example.com"}
+
+http://project.codethree.net/api/contact.php?edit=1
+{"contactid":1,"fname":"Robert","lname":"Leinecker","phone":"0234567891","email":"example@example.com"}
+
+http://project.codethree.net/api/contact.php?del=1
+{"contactid":1}
