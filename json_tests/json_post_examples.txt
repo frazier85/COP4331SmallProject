@@ -19,5 +19,5 @@ http://project.codethree.net/api/contact.php?del=1
 {"contactid":1}
 
 http://project.codethree.net/api/contact.php?search=1
-{"uid":1,"name":"rob"}
-Where  name is what you're searching for
+{"uid":1,"search":"rob"}
+{"uid":1,"search":"example.com"} (searching all contacts with a certain email provider for example)

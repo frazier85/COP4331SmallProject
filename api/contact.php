@@ -95,11 +95,11 @@ elseif(isset($view))
 }
 elseif(isset($search))
 {
-	if ($stmt = $dbc->prepare("SELECT * FROM CONTACTS WHERE userID=? AND firstname LIKE CONCAT('%',?,'%') OR lastname LIKE CONCAT('%',?,'%') ORDER BY lastname ASC" ))
+	if ($stmt = $dbc->prepare("SELECT * FROM CONTACTS WHERE userID=? AND firstname LIKE CONCAT('%',?,'%') OR lastname LIKE CONCAT('%',?,'%') OR email LIKE CONCAT('%',?,'%') OR phone LIKE CONCAT('%',?,'%') ORDER BY lastname ASC" ))
 	{
 		$uid = $inData["uid"];
-		$searchData = $inData["name"];
-		$stmt->bind_param('iss', $uid, $searchData, $searchData);
+		$searchData = $inData["search"];
+		$stmt->bind_param('issss', $uid, $searchData, $searchData, $searchData, $searchData);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($cid, $userid, $fname, $lname, $phone, $email);
