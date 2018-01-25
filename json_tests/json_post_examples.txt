@@ -17,3 +17,7 @@ http://project.codethree.net/api/contact.php?edit=1
 
 http://project.codethree.net/api/contact.php?del=1
 {"contactid":1}
+
+http://project.codethree.net/api/contact.php?search=1
+{"uid":1,"name":"rob"}
+Where  name is what you're searching for
