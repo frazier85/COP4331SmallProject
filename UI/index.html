@@ -5,7 +5,7 @@
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
-      <script type="text/javascript" src="js/code.js"></script>
+      <script type="text/javascript" src="code.js"></script>
     </head>
 
     <body>
@@ -21,22 +21,24 @@
 
         <div id="loginDiv">
           <h2>Login</h2>
+          <form>
             <div class="form-row">
               <div class="form-group col-md-5">
                 <label for="loginName">Username</label>
-                <input type="text" class="form-control" id="loginName" placeholder="Username">
+                <input type="text" class="form-control" id="loginUsername" placeholder="Username">
               </div>
               <div class="form-group col-md-5">
                 <label for="loginPassword">Password</label>
                 <input type="password" class="form-control" id="loginPassword" placeholder="Password">
               </div>
             </div>
-            <button type="button" id="loginButton" class="btn btn-primary" onclick="doLogin();">Log In</button>
+            <button type="button" id="loginButton" class="btn btn-primary"  onclick="doLogin();">Log In</button>
+          </form>
             <span id="loginResult"></span>
           </div>
 
           <div id="loggedInDiv" style="display:none; visibility:hidden;">
-          	Logged in as <span id="userName"></span><br />
+          	Logged in as <span id="userDisplay"></span><br />
           	<button type="button" id="logoutButton" class="btn btn-primary" onclick="doLogout();"> Log Out </button>
           </div>
 
@@ -52,11 +54,11 @@
                   <div class="col-4">
                     <div class="form-group">
                       <input type="text" id="searchInput" aria-describedby="search" placeholder="Search">
-                      <button type="submit" class="btn btn-primary" onclick="searchContact();">Search</button>
+                      <button type="button" class="btn btn-primary" onclick="searchContact();">Search</button>
                     </div>
                   </div>
                   <div class="col-4">
-                    <button type="submit" class="btn btn-primary" onclick="deleteContact();">Delete Contact</button>
+                    <button type="button" class="btn btn-primary" onclick="deleteContact();">Delete Contact</button>
                   </div>
                 </div>
                 <span id="contactSearchResult"></span>
@@ -82,7 +84,7 @@
                 </div>
                 <div class="form-group col-md-5">
                   <label for="inputCity">Phone Number</label>
-                  <input type="text" class="form-control" id="inputPhoneNum" placeholder="Phone Number">
+                  <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number">
                 </div>
               </div>
               <button type="submit" class="btn btn-primary" onclick="addContact();">Add Contact</button>

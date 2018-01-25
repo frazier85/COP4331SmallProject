@@ -3,8 +3,12 @@
 //  not entire sure how well everything is going to go together, feel free to change
 //  need to fix searh contacts so it works on every column (first, last, phone#, email)
 
+/*Hey EJ, hope you dont mind that I changed some variables and other things within the code to reflect what James
+said to me this afternoon about how he set up his php files and some variables I changed within the html document.
+Added the hideorshow back to make it so that everything can be done on one page
+-Katie*/
+
 var urlBase = '/api';
-var extension = "php";
 
 var userId = 0;
 
@@ -12,46 +16,69 @@ function doLogin()
 {
 	userId = 0;
 
-	var username = document.getElementById("inputEmail4").value;
-	var password = document.getElementById("inputPassword4").value;
-	
+	var username = document.getElementById("loginUsername").value;
+	var password = document.getElementById("loginPassword").value;
+
+	document.getElementById("loginResult").innerHTML = "";
+
 	var jsonPayload = '{"username" : "' + username + '", "password" : "' + password + '"}';
-	var url = urlBase + '/login.' + extension;
-	
+	var url = urlBase + '/login.php?login=1';
+
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, false);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	try
 	{
 		xhr.send(jsonPayload);
-		
+
 		var jsonObject = JSON.parse( xhr.responseText );
-		
+
 		userId = jsonObject.id;
-		
-		/*if( userId < 1 )
+
+		if( userId < 1 )
 		{
 			document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 			return;
 		}
-		*/
-		
-		document.getElementById("inputEmail4").value = "";
-		document.getElementById("inputPassword4").value = "";
-		
+
+		displayName = jsonObject.username;
+		document.getElementById("userDisplay").innerHTML = displayName;
+		document.getElementById("loginUsername").value = "";
+		document.getElementById("loginPassword").value = "";
+
+		hideOrShow( "loggedInDiv", true);
+		hideOrShow( "accessUIDiv", true);
+		hideOrShow( "loginDiv", false);
 	}
 	catch(err)
 	{
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
-	
+
 }
 
 function doLogout()
 {
 	userId = 0;
-	document.getElementById("inputEmail4").value = "";
-	document.getElementById("inputPassword4").value = "";	
+	document.getElementById("loginName").value = "";
+	document.getElementById("loginPassword").value = "";
+	hideOrShow( "loggedInDiv", false);
+	hideOrShow( "accessUIDiv", false);
+	hideOrShow( "loginDiv", true);
+}
+
+function hideOrShow( elementId, showState )
+{
+	var vis = "visible";
+	var dis = "block";
+	if( !showState )
+	{
+		vis = "hidden";
+		dis = "none";
+	}
+
+	document.getElementById( elementId ).style.visibility = vis;
+	document.getElementById( elementId ).style.display = dis;
 }
 
 
@@ -59,20 +86,20 @@ function addContact()
 {
 	var fname = document.getElementById("inputFirstName").value;
 	var lname = document.getElementById("inputLastName").value;
-	var phone = document.getElementById("inputPhoneNum").value;
-	var email = document.getElementById("inputEmail4").value;
+	var phone = document.getElementById("inputPhone").value;
+	var email = document.getElementById("inputEmail").value;
 
 	var jsonPayload = '{"uid" : "' + userId + '", "fname" : "' + fname + '", "lname" : "' + lname + '", "phone" : "' + phone + '", "email" : "' + email + '"}';
-	var url = urlBase + '/contact.' + extension;
-	
+	var url = urlBase + '/contact.php?add=1';
+
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	try
 	{
-		xhr.onreadystatechange = function() 
+		xhr.onreadystatechange = function()
 		{
-			if (this.readyState == 4 && this.status == 200) 
+			if (this.readyState == 4 && this.status == 200)
 			{
 				document.getElementById("contactResult").innerHTML = "Contact has been added";
 			}
@@ -83,7 +110,7 @@ function addContact()
 	{
 		document.getElementById("contactResult").innerHTML = err.message;
 	}
-	
+
 }
 
 // Searches by first name only for now, due to First name being the first column
@@ -94,31 +121,31 @@ function searchContact()
 	var contactList = document.getElementByTagName("table");
  	var filter = search.value.toUpperCase();
   	var tr = conactList.getElementsByTagName("tr");
-	
+
 	var jsonPayload = '{"search" : "' + search + '"}';
 	var url = urlBase + '/search.' + extension;
-	
+
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	try
 	{
-		xhr.onreadystatechange = function() 
+		xhr.onreadystatechange = function()
 		{
-			if (this.readyState == 4 && this.status == 200) 
+			if (this.readyState == 4 && this.status == 200)
 			{
 				var jsonObject = JSON.parse( xhr.responseText );
 
-				for (i = 0; i < tr.length; i++) 
+				for (i = 0; i < tr.length; i++)
 				{
 				    td = tr[i].getElementsByTagName("td")[0];
-				    if (td) 
+				    if (td)
 				    {
-				      	if (td.innerHTML.toUpperCase().indexOf(filter) > -1) 
+				      	if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
 				        	tr[i].style.display = "";
 				    	else {
 				        	tr[i].style.display = "none";
-				    } 
+				    }
 				}
 			}
 		};
@@ -128,5 +155,5 @@ function searchContact()
 	{
 		document.getElementById("contactResult").innerHTML = err.message;
 	}
-	
+
 }
