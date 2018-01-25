@@ -95,7 +95,7 @@ elseif(isset($view))
 }
 elseif(isset($search))
 {
-	if ($stmt = $dbc->prepare("SELECT * FROM CONTACTS WHERE userID=? AND firstname LIKE ? OR lastname LIKE ? firstname ORDER BY lastname ASC" ))
+	if ($stmt = $dbc->prepare("SELECT * FROM CONTACTS WHERE userID=? AND firstname LIKE CONCAT('%',?,'%') OR lastname LIKE CONCAT('%',?,'%') firstname ORDER BY lastname ASC" ))
 	{
 		$uid = $inData["uid"];
 		$searchData = $inData["name"];
