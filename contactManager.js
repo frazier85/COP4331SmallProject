@@ -1,9 +1,4 @@
 
-/*Hey EJ, hope you dont mind that I changed some variables and other things within the code to reflect what James
-said to me this afternoon about how he set up his php files and some variables I changed within the html document.
-Added the hideorshow back to make it so that everything can be done on one page
--Katie*/
-
 // No problem, sounds great!
 // I changed the search function on here since it looks like the php will handle it ?
 // Additionally, added the register, delete, view, edit functions to pass the parameters based on the examples
@@ -13,10 +8,13 @@ var urlBase = '/api';
 
 var userId = 0;
 
-function doRegister()
+function register()
 {
+	userId = 0;
 	var username = document.getElementById("loginUsername").value;
 	var password = document.getElementById("loginPassword").value;
+
+	document.getElementById("loginResult").innerHTML = "";
 
 	var jsonPayload = '{"username" : "' + username + '", "password" : "' + password + '"}';
 	var url = urlBase + '/contact.php?register=1';
@@ -26,21 +24,12 @@ function doRegister()
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	try
 	{
-		// Not sure if we want to display something upon completing register
-		// Wasn't sure where the ID tag was to edit the string so just commented it out for now
-		
-		/*xhr.onreadystatechange = function()
-		{
-			if (this.readyState == 4 && this.status == 200)
-			{
-				document.getElementById("contactSearchResult").innerHTML = "Registration complete";
-			}
-		};*/
+		//tried to display stuff after registering but it messed up stuff
 		xhr.send(jsonPayload);
 	}
 	catch(err)
 	{
-		document.getElementById("contactSearchResult").innerHTML = err.message;
+		document.getElementById("loginResult").innerHTML = err.message;
 	}
 
 }
@@ -93,8 +82,7 @@ function doLogin()
 function doLogout()
 {
 	userId = 0;
-	document.getElementById("loginName").value = "";
-	document.getElementById("loginPassword").value = "";
+
 	hideOrShow( "loggedInDiv", false);
 	hideOrShow( "accessUIDiv", false);
 	hideOrShow( "loginDiv", true);
@@ -134,6 +122,8 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
+				hideOrShow( "contactList", false );
+
 				document.getElementById("contactSearchResult").innerHTML = "Contact has been added";
 			}
 		};
@@ -146,11 +136,12 @@ function addContact()
 
 }
 
-function delContact()
+function deleteContact()
 {
-	var contactid = document.getElementById("inputFirstName").value;
+	document.getElementById("contactSearchResult").innerHTML = "";
+	var contactList = document.getElementById("contactList");
 
-	var jsonPayload = '{"contactid" : "' + contactid + '"}';
+	var jsonPayload = '{"contactid" : "' + document.getElementById('contactList').value + '"}';
 	var url = urlBase + '/contact.php?del=1';
 
 	var xhr = new XMLHttpRequest();
@@ -162,6 +153,8 @@ function delContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
+				hideOrShow( "contactList", false );
+
 				document.getElementById("contactSearchResult").innerHTML = "Contact has been deleted";
 			}
 		};
@@ -207,11 +200,14 @@ function editContact()
 }
 
 
-function viewContact()
+function viewAllContacts()
 {
-	var uid = document.getElementById("searchText").value;
+	document.getElementById("contactSearchResult").innerHTML = "";
 
-	var jsonPayload = '{"uid" : "' + uid + '"}';
+	var contactList = document.getElementById("contactList");
+	contactList.innerHTML = "";
+
+	var jsonPayload = '{"uid" : "' + userId + '"}';
 	var url = urlBase + '/contact.php?view=1';
 
 	var xhr = new XMLHttpRequest();
@@ -223,7 +219,19 @@ function viewContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				document.getElementById("contactSearchResult").innerHTML = "Contact has been retrieved";
+				hideOrShow( "contactList", true );
+
+				document.getElementById("contactSearchResult").innerHTML = "Contact(s) has been retrieved";
+				var jsonObject = JSON.parse( xhr.responseText );
+				var i;
+				for( i in jsonObject.contacts)
+				{
+						var opt = document.createElement("option");
+						var entryString = "";
+						opt.text = entryString.concat(jsonObject.contacts[i].first, " ", jsonObject.contacts[i].last, " ", jsonObject.contacts[i].phone, " ", jsonObject.contacts[i].email);
+						opt.value = jsonObject.contacts[i].id;
+						contactList.options.add(opt);
+				}
 			}
 		};
 		xhr.send(jsonPayload);
@@ -237,12 +245,14 @@ function viewContact()
 
 function searchContact()
 {
+	document.getElementById("contactSearchResult").innerHTML = "";
+
 	var search = document.getElementById("searchText").value;
-	
+
 	var contactList = document.getElementById("contactList");
 	contactList.innerHTML = "";
 
-	var jsonPayload = '{"search" : "' + search + '"}';
+	var jsonPayload = '{"uid" : "' + userId + '", "search" : "' + search + '"}';
 	var url = urlBase + '/contact.php?search=1';
 
 	var xhr = new XMLHttpRequest();
@@ -254,16 +264,18 @@ function searchContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				document.getElementById("contactSearchResult").innerHTML = "Contacts has been retrieved";
+				hideOrShow( "contactList", true );
+
+				document.getElementById("contactSearchResult").innerHTML = "Contact(s) has been retrieved";
 				var jsonObject = JSON.parse( xhr.responseText );
-				
 				var i;
-				for( i=0; i<jsonObject.results.length; i++ )
+				for( i in jsonObject.contacts)
 				{
-					var opt = document.createElement("option");
-					opt.text = jsonObject.results[i];
-					opt.value = "";
-					contactList.options.add(opt);
+						var opt = document.createElement("option");
+						var entryString = "";
+						opt.text = entryString.concat(jsonObject.contacts[i].first, " ", jsonObject.contacts[i].last, " ", jsonObject.contacts[i].phone, " ", jsonObject.contacts[i].email);
+						opt.value = jsonObject.contacts[i].id;
+						contactList.options.add(opt);
 				}
 			}
 		};
@@ -273,5 +285,4 @@ function searchContact()
 	{
 		document.getElementById("contactSearchResult").innerHTML = err.message;
 	}
-
 }
