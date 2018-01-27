@@ -238,6 +238,9 @@ function viewContact()
 function searchContact()
 {
 	var search = document.getElementById("searchText").value;
+	
+	var contactList = document.getElementById("contactList");
+	contactList.innerHTML = "";
 
 	var jsonPayload = '{"search" : "' + search + '"}';
 	var url = urlBase + '/contact.php?search=1';
@@ -251,7 +254,17 @@ function searchContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				document.getElementById("contactSearchResult").innerHTML = "Contact has been retrieved";
+				document.getElementById("contactSearchResult").innerHTML = "Contacts has been retrieved";
+				var jsonObject = JSON.parse( xhr.responseText );
+				
+				var i;
+				for( i=0; i<jsonObject.results.length; i++ )
+				{
+					var opt = document.createElement("option");
+					opt.text = jsonObject.results[i];
+					opt.value = "";
+					contactList.options.add(opt);
+				}
 			}
 		};
 		xhr.send(jsonPayload);
