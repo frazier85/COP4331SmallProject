@@ -134,7 +134,7 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				document.getElementById("contactSearchResult").innerHTML = "Contact has been added;
+				document.getElementById("contactSearchResult").innerHTML = "Contact has been added";
 			}
 		};
 		xhr.send(jsonPayload);
