@@ -95,10 +95,15 @@ elseif(isset($view))
 }
 elseif(isset($search))
 {
+	$uid = $inData["uid"];
+	$searchData = $inData["search"];
+	if(strlen($searchData) < 3)
+	{
+		sendError("Please enter at least 3 characters");
+		die();
+	}
 	if ($stmt = $dbc->prepare("SELECT * FROM CONTACTS WHERE userID=? AND firstname LIKE CONCAT('%',?,'%') OR lastname LIKE CONCAT('%',?,'%') OR email LIKE CONCAT('%',?,'%') OR phone LIKE CONCAT('%',?,'%') ORDER BY lastname ASC" ))
 	{
-		$uid = $inData["uid"];
-		$searchData = $inData["search"];
 		$stmt->bind_param('issss', $uid, $searchData, $searchData, $searchData, $searchData);
 		$stmt->execute();
 		$stmt->store_result();
