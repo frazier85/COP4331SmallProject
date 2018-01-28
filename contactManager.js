@@ -17,7 +17,7 @@ function register()
 	document.getElementById("loginResult").innerHTML = "";
 
 	var jsonPayload = '{"username" : "' + username + '", "password" : "' + password + '"}';
-	var url = urlBase + '/contact.php?register=1';
+	var url = urlBase + '/login.php?register=1';
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
