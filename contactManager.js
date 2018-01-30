@@ -13,11 +13,20 @@ function register()
 	var url = urlBase + '/login.php?register=1';
 
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
+	xhr.open("POST", url, false);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	try
 	{
 		xhr.send(jsonPayload);
+		if(typeof xhr.responseText != "undefined" && xhr.responseText != "")
+		{
+			var jsonObject = JSON.parse(xhr.responseText);
+			document.getElementById("loginResult").innerHTML = jsonObject.error;
+		}
+		else
+		{
+			document.getElementById("loginResult").innerHTML = "Successfully registered. Please log in.";
+		}
 	}
 	catch(err)
 	{
