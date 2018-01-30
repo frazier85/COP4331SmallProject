@@ -46,6 +46,21 @@ if(isset($login))
 }
 elseif(isset($register))
 {
+	if(doesUserExist($user))
+	{
+		sendError("Username is taken");
+		die();
+	}
+	if(strlen($user) < 3)
+	{
+		sendError("Usernames must be at least 3 characters long");
+		die();
+	}
+	if(strlen($pass) < 3)
+	{
+		sendError("Passwords must be at least 3 characters long");
+		die();
+	}
 	if($stmt = $dbc->prepare("INSERT INTO USERS (id, username, PW) VALUES (NULL, ?, ?)"))
 	{
 		$stmt->bind_param('ss', $user, $pass);
