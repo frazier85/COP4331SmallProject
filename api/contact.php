@@ -102,13 +102,13 @@ elseif(isset($search))
 		sendError("Please enter at least 3 characters");
 		die();
 	}
-	if ($stmt = $dbc->prepare("SELECT * FROM CONTACTS WHERE userID=? AND firstname LIKE CONCAT('%',?,'%') OR lastname LIKE CONCAT('%',?,'%') OR email LIKE CONCAT('%',?,'%') OR phone LIKE CONCAT('%',?,'%') ORDER BY lastname ASC" ))
+	if ($stmt = $dbc->prepare("SELECT * FROM CONTACTS WHERE userID=? AND (firstname LIKE CONCAT('%',?,'%') OR lastname LIKE CONCAT('%',?,'%') OR email LIKE CONCAT('%',?,'%') OR phone LIKE CONCAT('%',?,'%')) ORDER BY lastname ASC" ))
 	{
 		$stmt->bind_param('issss', $uid, $searchData, $searchData, $searchData, $searchData);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($cid, $userid, $fname, $lname, $phone, $email);
-		$json = '{ "contacts": [';
+		$json = '{ "contacts": [ ';
 		while($stmt->fetch())
 		{
 			$json = $json . '{"id" : ' . $cid . ', "first" : "' . $fname . '","last":"' . $lname .
